@@ -9,5 +9,9 @@ npx hardhat help
 npx hardhat test
 REPORT_GAS=true npx hardhat test
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
 ```
+
+
+
+USE THIS COMMAND TO DEPLOY ON BNB TESTNET
+ npx hardhat ignition deploy ./ignition/modules/deployer.ts --network bnbTestnet
