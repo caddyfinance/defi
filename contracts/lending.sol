@@ -66,8 +66,8 @@ contract Lending is OwnableUpgradeable{
         } else {
             info memory x = lentInfo[id];
             lentInfo[id].unrealisedRewards +=
-                (x.amount * rate * timeNow - x.timestamp) /
-                (cycleDuration * 100);
+                ((x.amount * rate)/100)*((timeNow - x.timestamp) /
+                cycleDuration);
             lentInfo[id].amount += amount;
             lentInfo[id].timestamp = timeNow;
             returnedId = id;
@@ -79,7 +79,7 @@ contract Lending is OwnableUpgradeable{
     function withdraw(uint id) external returns(uint){
         uint timeNow = block.timestamp;
         address recipient = lentInfo[id].owner;
-        require(msg.sender == recipient, "restricted");
+        // require(msg.sender == recipient, "restricted");
         uint totalAmount = calculateRewards(id, timeNow);
         lentInfo[id].timestamp = timeNow;
         lentInfo[id].unrealisedRewards = 0;
@@ -99,16 +99,15 @@ contract Lending is OwnableUpgradeable{
         return (x.unrealisedRewards +((block.timestamp - x.timestamp)/cycleDuration)*((x.amount * rate)/100));
     }
 
-
-
-    function withdrawFunds(uint id) external {
+    function withdrawFunds(uint id) external returns(uint){
          uint timeNow = block.timestamp;
         address recipient = lentInfo[id].owner;
-        require(msg.sender == recipient, "restricted");
+        // require(msg.sender == recipient, "restricted");
         uint totalAmount = lentInfo[id].amount+ calculateRewards(id, timeNow);
         lentInfo[id].timestamp = timeNow;
         lentInfo[id].unrealisedRewards = 0;
         lentInfo[id].amount = 0;
         usdtToken.mint(recipient, totalAmount);
+        return totalAmount;
     }
 }

@@ -8,7 +8,7 @@ contract USDT is ERC20Burnable{
     constructor()
         ERC20("USDT Fake", "USDTf")
     {
-     
+        
     }
     function mint(address to, uint256 amount) public {
         _mint(to, amount);

@@ -32,6 +32,7 @@ interface ILending {
     function deposit(uint, uint) external returns(uint);
     function withdraw(uint) external returns(uint);
     function calculateCurrentRewards(uint) external view  returns(uint);
+    function withdrawFunds(uint) external returns(uint);
 }
 
 interface IStaking {
@@ -82,6 +83,12 @@ contract yieldpool is OwnableUpgradeable{
     function withdraw() public {
         uint id = profiles[msg.sender].id;
         uint returned = lendingContract.withdraw(id);
+        usdtToken.transfer(msg.sender, returned);
+    }
+
+    function withdrawFunds() public {
+        uint id = profiles[msg.sender].id;
+        uint returned = lendingContract.withdrawFunds(id);
         usdtToken.transfer(msg.sender, returned);
     }
 
