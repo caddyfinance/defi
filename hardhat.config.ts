@@ -26,6 +26,11 @@ const config: HardhatUserConfig = {
       chainId: 80002,
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    xrplEVM: {
+      url: "https://rpc-evm-sidechain.xrpl.org",
+      chainId: 1440002,
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
 };
 
